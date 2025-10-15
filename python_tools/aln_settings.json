@@ -1,0 +1,7 @@
+{
+  "baud_rate": 7372800,
+  "auto_reconnect": true,
+  "theme": "dark",
+  "save_frames": false,
+  "frame_save_path": "captured_frames"
+}

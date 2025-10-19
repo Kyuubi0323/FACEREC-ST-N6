@@ -29,7 +29,43 @@ A comprehensive embedded face recognition system implementing real-time face det
 1. **Configure tool paths**
    Edit `stm32_tools_config.json` and set the correct paths for your installation
 
-2. **Build Process**
+2. **Environment Setup (Recommended)**
+   
+   The project includes an automated environment setup script that exports all tool paths and configurations as environment variables:
+   
+   ```bash
+   
+   
+   # save to a file and source it
+   python3 python_tools/setup_stm32_env.py stm32_env.sh
+   source stm32_env.sh
+   
+   # Verify tools are properly configured
+   verify_stm32_tools
+   ```
+   
+   **What this script does:**
+   - Reads `stm32_tools_config.json` configuration file
+   - Exports all STM32 tool paths as environment variables:
+     - `STM32_STM32PROGRAMMER_PATH` - STM32CubeProgrammer path
+     - `STM32_STM32SIGNINGTOOL_PATH` - Signing tool path
+     - `STM32_STM32EDGEAI_PATH` - Edge AI tool path
+     - `STM32_STM32CUBEIDE_PATH` - CubeIDE path
+   - Exports memory layout addresses (FSBL, models, application)
+   - Exports build configuration settings
+   - Exports model addresses for neural networks
+   - Exports embedding storage configuration
+   - Creates convenience aliases (`stm32prog`, `stm32sign`, `stedgeai`, `stm32ide`)
+   - Adds a `verify_stm32_tools()` function to check tool availability
+   - Automatically adds tool directories to `$PATH`
+   
+   **Usage Tips:**
+   - Add `source stm32_env.sh` to your `.bashrc` for automatic setup
+   - Run `verify_stm32_tools` after sourcing to confirm all tools are found
+   - Use the aliases for quick access to tools (e.g., `stm32prog --help`)
+   - Environment variables can be used in build scripts and Makefiles
+
+3. **Build Process**
    ```bash
    # Convert AI models
    ./scripts/compile_model.sh face_detection ./input_models/centerface.tflite
